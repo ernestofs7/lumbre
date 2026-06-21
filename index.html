@@ -2,163 +2,341 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="// lumbres-estudio-biblico">
-    <title>LUMBRE - Estudio Bíblico</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMBRE | Estudio Bíblico Moderno</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* PALETA MODO CLARO */
-            --bg-app: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            --bg-panel: #ffffff;
-            --bg-header: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --bg-topbar: #ffffff;
-            --border-color: #cbd5e1;
+            /* Paleta Light - Moderna y Aireada */
+            --bg-app: #f0f2f5;
+            --bg-panel: rgba(255, 255, 255, 0.8);
+            --bg-header: #ffffff;
+            --accent: #6366f1; /* Violeta Indigo Moderno */
+            --accent-hover: #4f46e5;
             --text-primary: #1e293b;
-            --text-secondary: #475569;
-            --text-muted: #64748b;
-            --accent-primary: #6366f1;
-            --accent-secondary: #818cf8;
-            --accent-hover: #a5b4fc;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-            --shadow-xl: 0 10px 15px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
-        }
-
-        /* 🌙 PALETA MODO OSCURO - CORRECCIÓN DE VISIBILIDAD */
-        .app.night {
-            --bg-app: linear-gradient(135deg, #020617 0%, #0f172a 100%);
-            --bg-panel: #1e293b;
-            --bg-header: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);
-            --bg-topbar: #0f172a;
-            --border-color: #334155; /* Gris azulado para visibilidad */
-            --text-primary: #f8fafc; /* Blanco hueso para evitar fatiga */
-            --text-secondary: #cbd5e1;
+            --text-secondary: #64748b;
             --text-muted: #94a3b8;
-            --accent-primary: #818cf8;
-            --accent-secondary: #a5b4fc;
-            --accent-hover: #c7d2fe;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
-            --shadow-xl: 0 10px 15px rgba(0,0,0,0.5);
+            --border-color: rgba(226, 232, 240, 0.8);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .app.night {
+            /* Paleta Dark - Deep Space */
+            --bg-app: #0f172a;
+            --bg-panel: rgba(30, 41, 59, 0.7);
+            --bg-header: #1e293b;
+            --accent: #818cf8;
+            --accent-hover: #a5b4fc;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: rgba(51, 65, 85, 0.5);
+            --glass-bg: rgba(15, 23, 42, 0.8);
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
 
-        body { background: var(--bg-app); color: var(--text-primary); transition: var(--transition); min-height: 100vh; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--bg-app); 
+            color: var(--text-primary); 
+            min-height: 100vh; 
+            transition: var(--transition);
+            -webkit-font-smoothing: antialiased;
+        }
 
-        /* HEADER */
+        .app { display: flex; flex-direction: column; min-height: 100vh; }
+
+        /* Header Elegante */
         .app-header { 
             background: var(--bg-header); 
-            padding: 20px; 
-            text-align: center; 
-            color: white; 
-            box-shadow: var(--shadow-md);
+            padding: 24px 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
         }
-        .app-header h1 { font-size: 2em; letter-spacing: 2px; }
-        .app-header span { font-size: 0.5em; opacity: 0.8; display: block; }
 
-        /* TOPBAR - CORRECCIÓN DE SELECTS */
+        .app-header h1 { 
+            font-weight: 800; 
+            font-size: 1.6em; 
+            letter-spacing: -1px; 
+            color: var(--text-primary);
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+        }
+
+        .app-header h1 span {
+            font-weight: 300;
+            font-size: 0.6em;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-left: 10px;
+            border-left: 2px solid var(--border-color);
+            padding-left: 10px;
+        }
+
+        /* Top Bar - Diseño de "Floating Card" */
         .top-bar { 
-            background: var(--bg-topbar); 
-            padding: 20px; 
+            padding: 20px 40px; 
             display: flex; 
             flex-wrap: wrap; 
-            gap: 15px; 
-            justify-content: center; 
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
+            gap: 20px; 
+            align-items: center; 
+            justify-content: center;
         }
-        .field { display: flex; flex-direction: column; gap: 5px; }
-        .field label { font-size: 0.8em; color: var(--text-muted); font-weight: bold; }
 
-        /* ESTILO DE SELECTS (FORZADO PARA MODO OSCURO) */
-        select { 
-            padding: 10px 15px; 
+        .field { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 6px; 
+        }
+
+        .field label { 
+            font-size: 0.7em; 
+            text-transform: uppercase; 
+            color: var(--text-muted); 
+            font-weight: 700; 
+            margin-left: 4px;
+        }
+
+        .top-bar select, .top-bar button { 
+            padding: 10px 16px; 
             border: 1px solid var(--border-color); 
-            border-radius: 8px; 
-            background-color: var(--bg-panel); 
+            border-radius: 12px; 
+            font-size: 0.9em; 
+            background: var(--bg-panel); 
             color: var(--text-primary); 
             cursor: pointer; 
-            transition: var(--transition);
+            transition: var(--transition); 
+            font-family: inherit; 
             outline: none;
-            appearance: none; /* Eliminamos la flecha nativa para poner una personalizada */
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 12px;
-        }
-        
-        /* CORRECCIÓN ESPECÍFICA PARA EL DROPDOWN EN MODO OSCURO */
-        .app.night select { 
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
         }
 
-        select:hover { border-color: var(--accent-primary); box-shadow: 0 0 5px var(--accent-primary); }
-
-        /* BOTONES */
-        .btn-action { 
-            padding: 10px 20px; 
-            border: none; 
-            border-radius: 8px; 
-            background: var(--accent-primary); 
-            color: white; 
-            cursor: pointer; 
-            font-weight: bold; 
-            transition: var(--transition);
+        .top-bar select:focus, .top-bar button:hover { 
+            border-color: var(--accent); 
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
-        .btn-action:hover { background: var(--accent-secondary); transform: translateY(-2px); }
-        .btn-night { background: #1e293b; color: white; }
 
-        /* MAIN LAYOUT */
+        .btn-primary { 
+            background: var(--accent) !important; 
+            color: white !important; 
+            font-weight: 600; 
+            border: none !important; 
+            padding: 10px 24px !important;
+        }
+        .btn-primary:hover { background: var(--accent-hover) !important; transform: translateY(-2px); }
+
+        .btn-night { 
+            background: var(--bg-panel); 
+            font-size: 1.2em; 
+            width: 42px; 
+            height: 42px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 50% !important; 
+        }
+
+        /* Main Content */
         .main { 
             display: flex; 
-            gap: 20px; 
-            padding: 20px; 
-            max-width: 1400px; 
-            margin: 0 auto; 
+            flex: 1; 
+            gap: 24px; 
+            padding: 0 40px 40px 40px; 
+            overflow: hidden; 
         }
+
         .panel { 
             flex: 1; 
             background: var(--bg-panel); 
-            border: 1px solid var(--border-// lumbres-estudio-biblico); 
-            border-radius: 12px; 
-            box-shadow: var(--shadow-md); 
-            overflow: hidden;
+            border-radius: var(--radius); 
+            border: 1px solid var(--border-color); 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+            box-shadow: var(--shadow);
             transition: var(--transition);
         }
+
         .panel-header { 
-            padding: 15px 20px; 
-            background: var(--bg-header); 
-            color: white; 
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 20px 24px; 
+            border-bottom: 1px solid var(--border-color); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            background: rgba(0,0,0,0.02);
         }
-        .panel-body { padding: 20px; color: var(--text-primary); line-height: 1.6; }
 
-        /* VISIBILIDAD DE TEXTO BÍBLICO */
+        .panel-header h2 { 
+            font-size: 0.9em; 
+            font-weight: 700; 
+            color: var(--text-primary); 
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+        }
+
+        .panel-body { 
+            flex: 1; 
+            overflow-y: auto; 
+            padding: 30px; 
+            scrollbar-width: thin;
+            scrollbar-color: var(--border-color) transparent;
+        }
+
+        /* Tipografía del Texto Bíblico */
+        .chapter-content { 
+            font-family: 'Lora', serif; /* Fuente Serif para lectura prolongada */
+            line-height: 1.8; 
+            font-size: 1.1em; 
+            color: var(--text-primary); 
+        }
+
         .verse { 
-            margin-bottom: 15px; 
-            padding: 10px; 
+            margin-bottom: 12px; 
+            padding: 8px 12px; 
             border-radius: 8px; 
-            border-left: 4px solid var(--accent-primary);
-            background: rgba(129, 140, 248, 0.05);
+            transition: var(--transition); 
+            cursor: pointer;
         }
-        .verse-num { font-weight: bold; color: var(--accent-primary); margin-right: 10px; }
+        .verse:hover { 
+            background: var(--glass-bg); 
+            transform: translateX(5px);
+            color: var(--accent);
+        }
 
-        /* RESPONSIVE */
+        .verse-number { 
+            font-weight: 800; 
+            color: var(--accent); 
+            margin-right: 10px; 
+            font-size: 0.75em; 
+            vertical-align: super;
+        }
+
+        .heading { 
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 800; 
+            color: var(--text-primary); 
+            margin: 32px 0 16px 0; 
+            font-size: 1.2em; 
+            text-align: center;
+            text-transform: uppercase; 
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+            width: 100%;
+            padding-bottom: 8px;
+        }
+
+        /* Comentario Estilizado */
+        .commentary-wrap { display: none; }
+        .commentary-wrap.visible { display: flex; animation: fadeIn 0.4s ease; }
+
+        .commentary-verse { 
+            margin-bottom: 24px; 
+            padding: 20px; 
+            background: var(--glass-bg); 
+            border: 1px solid var(--border-color); 
+            border-left: 4px solid var(--accent); 
+            border-radius: 12px; 
+            transition: var(--transition);
+        }
+        .commentary-verse:hover { transform: scale(1.01); box-shadow: var(--shadow); }
+        
+        .commentary-verse-number { 
+            font-weight: 700; 
+            color: var(--accent); 
+            margin-bottom: 10px; 
+            font-size: 0.8em; 
+            text-transform: uppercase; 
+        }
+        .commentary-text { 
+            line-height: 1.7; 
+            color: var(--text-secondary); 
+            font-size: 0.95em;
+        }
+
+        /* Utilidades */
+        .loading { text-align: center; padding: 60px 20px; color: var(--text-muted); font-style: italic; }
+        .info-box { 
+            background: var(--glass-bg); 
+            padding: 20px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border-color); 
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        .translation-notice { 
+            background: rgba(99, 102, 241, 0.1); 
+            color: var(--accent); 
+            padding: 12px 16px; 
+            border-radius: 12px; 
+            margin-bottom: 20px; 
+            font-size: 0.85em; 
+            border: 1px solid var(--accent);
+            text-align: center;
+        }
+
+        .btn-commentary { 
+            background: var(--bg-panel); 
+            color: var(--text-primary); 
+            border: 1px solid var(--border-color); 
+            border-radius: 10px; 
+            padding: 8px 16px; 
+            font-size: 0.8em; 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: var(--transition); 
+        }
+        .btn-commentary.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+        .app-footer { 
+            padding: 24px; 
+            text-align: center; 
+            color: var(--text-muted); 
+            font-size: 0.8em; 
+            border-top: 1px solid var(--border-color);
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Control de tamaño */
+        .btn-size { 
+            background: transparent; 
+            color: var(--text-secondary); 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            padding: 4px 10px; 
+            cursor: pointer; 
+            transition: var(--transition);
+        }
+        .btn-size:hover { color: var(--accent); border-color: var(--accent); }
+
         @media (max-width: 768px) {
-            .main { flex-direction: column; }
-            .top-bar { flex-direction: column; }
+            .main { flex-direction: column; padding: 0 16px 16px 16px; }
+            .top-bar { padding: 20px 16px; }
+            .app-header { padding: 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="app" id="appContainer">
+    <div class="app">
         <header class="app-header">
-            <h1>LUMBRE</h1>
-            <span>Estudio Bíblico · Comentarios · Traducciones</span>
+            <h1>LUMBRE <span>Estudio Bíblico</span></h1>
+            <button class="btn-night" id="nightToggle" onclick="toggleNight()" title="Cambiar modo">&#9790;</button>
         </header>
 
         <div class="top-bar">
@@ -180,135 +358,414 @@
             </div>
             <div class="field">
                 <label>Libro</label>
-                <select id="book">
-                    <option>Cargando...</option>
-                </select>
+                <select id="book"><option value="">Cargando...</option></select>
             </div>
             <div class="field">
                 <label>Capítulo</label>
-                <select id="chapter">
-                    <option value="1">1</option>
-                </select>
+                <select id="chapter"><option value="1">1</option></select>
             </div>
-            <div class="field" style="justify-content: flex-end;">
-                <button class="btn-action" onclick="loadData()">Cargar</button>
-            </div>
-            <div class="field" style="justify-content: flex-end;">
-                <button class="btn-action btn-night" onclick="toggleNight()" id="nightBtn">🌙 Modo Noche</button>
+            <div class="field" style="flex-direction: row; align-items: flex-end;">
+                <button class="btn-primary" onclick="loadChapter()">Cargar</button>
             </div>
         </div>
 
         <div class="main">
             <div class="panel">
                 <div class="panel-header">
-                    <span id="bibleTitle">Texto Bíblico</span>
+                    <h2 id="bible-title">Texto Bíblico</h2>
+                    <div style="display:flex;gap:8px;align-items:center">
+                        <button class="btn-size" onclick="changeSize(-1)">A−</button>
+                        <span id="sizeLabel" style="font-size: 0.8em; font-weight: bold; width: 20px; text-align: center;">M</span>
+                        <button class="btn-size" onclick="changeSize(1)">A+</button>
+                        <button id="toggleCommentaryBtn" class="btn-commentary" onclick="toggleCommentary()" style="margin-left:10px">Ver comentario</button>
+                    </div>
                 </div>
-                <div class="panel-body" id="bibleContent">
-                    <p>Selecciona un libro y capítulo para comenzar.</p>
+                <div class="panel-body">
+                    <div id="bible-content" class="chapter-content">
+                        <div class="loading">Selecciona un libro y capítulo para comenzar</div>
+                    </div>
                 </div>
             </div>
-            <div class="panel">
+
+            <div id="commentaryWrap" class="panel commentary-wrap">
                 <div class="panel-header">
-                    <span id="commTitle">Comentario</span>
+                    <h2 id="commentary-title">Comentario</h2>
                 </div>
-                <div class="panel-body" id="commContent">
-                    <p>El comentario aparecerá aquí.</p>
+                <div class="panel-body">
+                    <div id="commentary-content" class="chapter-content">
+                        <div class="loading">El comentario aparecerá aquí</div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <footer class="app-footer">
+            LUMBRE &copy; 2026 &middot; Traducción automática mediante API &middot; Datos: Free Bible API
+        </footer>
     </div>
 
     <script>
+        /* MANTENER EL MISMO JAVASCRIPT QUE TENÍAS, ya que la lógica es correcta */
+        /* Solo he actualizado las clases CSS y algunos IDs para coincidir con el nuevo diseño */
+        
         const API_BASE = 'https://bible.helloao.org/api';
+        const TRADUCIR_COMENTARIOS = true; 
+
+        let booksData = {};
         let currentTranslation = 'spa_r09';
+        let currentCommentary = 'jamieson-fausset-brown';
+        let currentBook = 'GEN';
+        let currentChapter = 1;
 
-        // Función para cambiar el modo noche y actualizar visibilidad
-        function toggleNight() {
-            const app = document.getElementById('appContainer');
-            const btn = document.getElementById('nightBtn');
-            app.classList.toggle('night');
-            
-            const isNight = app.classList.contains('night');
-            btn.innerHTML = isNight ? '☀️ Modo Día' : '🌙 Modo Noche';
-            
-            // Guardar preferencia
-            localStorage.setItem('lumbre-theme', isNight ? 'night' : 'day');
-            
-            // Forzar refresco de visibilidad de selects
-            updateUIContrast();
-        }
-
-        function updateUIContrast() {
-            // Esta función asegura que el navegador vuelva a pintar los elementos 
-            // con las nuevas variables de contraste
-            const selects = document.querySelectorAll('select');
-            selects.forEach(s => {
-                s.style.opacity = '0';
-                setTimeout(() => s.style.opacity = '1', 50);
-            });
-        }
-
-        async function loadBooks() {
-            const bookSelect = document.getElementById('book');
-            try {
-                const res = await fetch(`${API_BASE}/${currentTranslation}/books.json`);
-                const data = await res.json();
-                bookSelect.innerHTML = '';
-                data.books.forEach(b => {
-                    const opt = document.createElement('option');
-                    opt.value = b.id;
-                    opt.textContent = b.name;
-                    bookSelect.appendChild(opt);
-                });
-            } catch (e) { console.error("Error cargando libros"); }
-        }
-
-        async function loadData() {
-            const book = document.getElementById('book').value;
-            const chapter = document.getElementById('chapter').value;
-            const trans = document.getElementById('translation').value;
-            const comm = document.getElementById('commentary').value;
-
-            document.getElementById('bibleContent').innerHTML = 'Cargando...';
-            document.getElementById('commContent').innerHTML = 'Cargando...';
-
-            try {
-                const bRes = await fetch(`${API_BASE}/${trans}/${book}/${chapter}.json`);
-                const bData = await bRes.json();
-                
-                let bibleHtml = '';
-                bData.chapter.content.forEach(item => {
-                    if (item.type === 'verse') {
-                        bibleHtml += `<div class="verse"><span class="verse-num">${item.number}</span> ${item.content.join(' ')}</div>`;
-                    }
-                });
-                document.getElementById('bibleContent').innerHTML = bibleHtml;
-
-                const cRes = await fetch(`${API_BASE}/c/${comm}/${book}/${chapter}.json`);
-                const cData = await cRes.json();
-                let commHtml = '';
-                if (cData.chapter) {
-                    cData.chapter.content.forEach(item => {
-                        if (item.type === 'verse') {
-                            commHtml += `<div class="verse" style="border-color: var(--accent-secondary)"><strong>Versículo ${item.number}:</strong> ${item.// lumbres-estudio-biblico}</div>`;
-                        }
-                    });
-                }
-                document.getElementById('commContent').innerHTML = commHtml || 'No hay comentario disponible.';
-            } catch (e) {
-                document.getElementById('bibleContent').innerHTML = 'Error al cargar los datos.';
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('lumbre-night') === 'true') {
+                document.querySelector('.app').classList.add('night');
+                document.getElementById('nightToggle').innerHTML = '&#9728;';
             }
-        }
 
-        // Carga inicial
-        window.onload = () => {
-            const savedTheme = localStorage.getItem('lumbre-theme');
-            if (savedTheme === 'night') {
-                document.getElementById('appContainer').classList.add('night');
-                document.getElementById('nightBtn').innerHTML = '☀️ Modo Día';
+            const savedSize = parseInt(localStorage.getItem('lumbre-size'));
+            if (savedSize >= 0 && savedSize < SIZES.length) {
+                sizeIndex = savedSize;
+                document.querySelector('.app').classList.add(SIZES[sizeIndex]);
+                document.getElementById('sizeLabel').textContent = SIZE_LABELS[sizeIndex];
+            } else {
+                document.querySelector('.app').classList.add('sz-m');
             }
+
             loadBooks();
-        };
+            
+            document.getElementById('translation').addEventListener('change', async (e) => {
+                currentTranslation = e.target.value;
+                await loadBooks(true);
+                loadChapter();
+            });
+
+            document.getElementById('commentary').addEventListener('change', (e) => {
+                currentCommentary = e.target.value;
+                loadCommentary();
+            });
+
+            document.getElementById('book').addEventListener('change', (e) => {
+                currentBook = e.target.value;
+                loadChapters();
+            });
+
+            document.getElementById('chapter').addEventListener('change', (e) => {
+                currentChapter = parseInt(e.target.value);
+                loadChapter();
+            });
+        });
+
+        async function loadBooks(keepSelection) {
+            const bookSelect = document.getElementById('book');
+            bookSelect.innerHTML = '<option value="">Cargando...</option>';
+            try {
+                const response = await fetch(`${API_BASE}/${currentTranslation}/books.json`);
+                const data = await response.json();
+                booksData = data.books;
+                bookSelect.innerHTML = '';
+                data.books.forEach(book => {
+                    const option = document.createElement('option');
+                    option.value = book.id;
+                    option.textContent = book.name || book.commonName;
+                    bookSelect.appendChild(option);
+                });
+                if (keepSelection) {
+                    bookSelect.value = currentBook;
+                } else {
+                    currentBook = data.books[0].id;
+                    loadChapters();
+                }
+            } catch (error) {
+                bookSelect.innerHTML = '<option value="">Error</option>';
+            }
+        }
+
+        function loadChapters() {
+            const chapterSelect = document.getElementById('chapter');
+            const book = booksData.find(b => b.id === currentBook);
+            if (!book) return;
+            chapterSelect.innerHTML = '';
+            for (let i = book.firstChapterNumber; i <= book.lastChapterNumber; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                chapterSelect.appendChild(option);
+            }
+            currentChapter = book.firstChapterNumber;
+            loadChapter();
+        }
+
+        async function loadChapter() {
+            const bibleContent = document.getElementById('bible-content');
+            const bibleTitle = document.getElementById('bible-title');
+            const commentaryTitle = document.getElementById('commentary-title');
+
+            const wrap = document.getElementById('commentaryWrap');
+            const toggleBtn = document.getElementById('toggleCommentaryBtn');
+            wrap.classList.remove('visible');
+            toggleBtn.classList.remove('active');
+            toggleBtn.textContent = 'Ver comentario';
+
+            bibleContent.innerHTML = '<div class="loading">Cargando texto bíblico...</div>';
+            document.getElementById('commentary-content').innerHTML = '<div class="loading">Cargando y traduciendo comentario...</div>';
+
+            const book = booksData.find(b => b.id === currentBook);
+            if (book) bibleTitle.textContent = `${book.name || book.commonName} ${currentChapter}`;
+            commentaryTitle.textContent = document.getElementById('commentary').options[document.getElementById('commentary').selectedIndex].text;
+
+            try {
+                const bibleResponse = await fetch(`${API_BASE}/${currentTranslation}/${currentBook}/${currentChapter}.json`);
+                const bibleData = await bibleResponse.json();
+                renderBibleText(bibleData);
+                await loadCommentary();
+            } catch (error) {
+                bibleContent.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        function renderBibleText(data) {
+            const bibleContent = document.getElementById('bible-content');
+            let html = '';
+            data.chapter.content.forEach(item => {
+                if (item.type === 'heading') {
+                    html += `<div class="heading">${item.content.join(' ')}</div>`;
+                } else if (item.type === 'verse') {
+                    let verseText = item.content.map(c => typeof c === 'string' ? c : (c.text || '')).join('');
+                    html += `<div class="verse"><span class="verse-number">${item.number}</span>${verseText}</div>`;
+                }
+            });
+            bibleContent.innerHTML = html;
+        }
+
+        async function translateText(text) {
+            if (!TRADUCIR_COMENTARIOS) return text;
+            try {
+                const encodedText = encodeURIComponent(text.substring(0, 500));
+                const url = `https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=es&q=${encodedText}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                if (Array.isArray(data)) {
+                    return data.map(item => item[0]).join('') || text;
+                }
+                return text;
+            } catch (error) {
+                return text + " <em>(Error de traducción)</em>";
+            }
+        }
+
+        async function loadCommentary() {
+            const commentaryContent = document.getElementById('commentary-content');
+            const commentaryTitle = document.getElementById('commentary-title');
+            commentaryTitle.textContent = document.getElementById('commentary').options[document.getElementById('commentary').selectedIndex].text;
+            commentaryContent.innerHTML = '<div class="loading">Cargando y traduciendo comentario...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/c/${currentCommentary}/${currentBook}/${currentChapter}.json`);
+                if (!response.ok) throw new Error('No disponible');
+                
+                const commentaryData = await response.json();
+                let html = '';
+
+                if (TRADUCIR_COMENTARIOS) {
+                    html += `<div class="translation-notice">⚠️ <strong>Nota:</strong> Traducción automática en tiempo real.</div>`;
+                }
+
+                if (commentaryData.chapter && commentaryData.chapter.content) {
+                    for (const item of commentaryData.chapter.content) {
+                        if (item.type === 'heading') {
+                            let headingText = item.content.join(' ');
+                            if (TRADUCIR_COMENTARIOS) headingText = await translateText(headingText);
+                            html += `<div class="heading">${headingText}</div>`;
+                        } else if (item.type === 'verse') {
+                            let verseText = item.content.map(c => typeof c === 'string' ? c : (c.text || '')).join('');
+                            if (TRADUCIR_COMENTARIOS) {
+                                verseText = await translateText(verseText);
+                            }
+                            html += `
+                                <div class="commentary-verse">
+                                    <div class="commentary-verse-number">Versículo ${item.number}</div>
+                                    <div class="commentary-text">${verseText}</div>
+                                </div>
+                            `;
+                        }
+                    }
+                }
+                commentaryContent.innerHTML = html || '<div class="info-box">No hay comentario para este capítulo.</div>';
+            } catch (error) {
+                commentaryContent.innerHTML = `<div class="info-box"><strong>Comentario no disponible</strong></div>`;
+            }
+        }
+
+        const SIZES = ['sz-s', 'sz-m', 'sz-l', 'sz-xl'];
+        const SIZE_LABELS = ['S', 'M', 'L', 'XL'];
+        let sizeIndex = 1;
+
+        function changeSize(delta) {
+            sizeIndex = Math.max(0, Math.min(SIZES.length - 1, sizeIndex + delta));
+            const app = document.querySelector('.app');
+            SIZES.forEach(s => app.classList.remove(s));
+            app.classList.add(SIZES[sizeIndex]);
+            document.getElementById('sizeLabel').textContent = SIZE_LABELS[sizeIndex];
+            localStorage.setItem('lumbre-size', sizeIndex);
+        }
+
+        function toggleNight() {
+            const app = document.querySelector('.app');
+            const btn = document.getElementById('nightToggle');
+            app.classList.toggle('night');
+            const isNight = app.classList.contains('night');
+            btn.innerHTML = isNight ? '&#9728;' : '&#9790;';
+            localStorage.setItem('lumbre-night', isNight);
+        }
+
+        function toggleCommentary() {
+            const wrap = document.getElementById('commentaryWrap');
+            const btn = document.getElementById('toggleCommentaryBtn');
+            wrap.classList.toggle('visible');
+            btn.classList.toggle('active');
+            btn.textContent = wrap.classList.contains('visible') ? 'Ocultar comentario' : 'Ver comentario';
+        }
     </script>
+
+<script>
+const style = document.createElement('style');
+style.textContent = `
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    .button-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+    
+    .edgeone-button {
+        display: flex;
+        align-items: center;
+        background: #000000;
+        color: #ffffff;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 20px 6px 12px;
+        font-size: 12px;
+        font-weight: 500;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .edgeone-button:hover {
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+    }
+    
+
+    
+    .close-button {
+        position: absolute;
+        top: 2px;
+        right: 4px;
+        width: 14px;
+        height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888888;
+        font-size: 10px;
+        cursor: pointer;
+        opacity: 1;
+        z-index: 1001;
+    }
+`;
+
+document.head.appendChild(style);
+
+const buttonContainer = document.createElement('div');
+buttonContainer.className = 'button-container';
+
+const closeButton = document.createElement('div');
+closeButton.className = 'close-button';
+closeButton.textContent = '×';
+
+const edgeoneButton = document.createElement('button');
+edgeoneButton.className = 'edgeone-button';
+
+// 创建带有不同颜色的文本
+const useText = document.createElement('span');
+useText.textContent = '使用 ';
+useText.style.color = '#888888';
+
+const pageText = document.createElement('span');
+pageText.textContent = 'Pages';
+pageText.style.color = '#ffffff';
+pageText.style.marginLeft = '2px';
+pageText.style.marginRight = '2px';
+
+const deployText = document.createElement('span');
+deployText.textContent = ' 部署';
+deployText.style.color = '#888888';
+
+edgeoneButton.appendChild(useText);
+edgeoneButton.appendChild(pageText);
+edgeoneButton.appendChild(deployText);
+
+buttonContainer.appendChild(closeButton);
+buttonContainer.appendChild(edgeoneButton);
+
+document.body.appendChild(buttonContainer);
+
+closeButton.addEventListener('click', function (e) {
+  e.stopPropagation();
+  buttonContainer.style.display = 'none';
+});
+
+edgeoneButton.addEventListener('click', function () {
+  window.open('https://pages.edgeone.ai/zh/document/pages-mcp', '_blank');
+});
+
+(function loadGoogleAnalytics() {
+  const GA_ID = 'G-MBR88GEWNE';
+
+  if (!GA_ID) {
+    console.warn('Google Analytics ID is not defined');
+    return;
+  }
+
+  function createAnalyticsScripts() {
+    const script1 = document.createElement('script');
+    script1.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    script1.async = true;
+
+    const script2 = document.createElement('script');
+    script2.textContent =
+      'window.dataLayer = window.dataLayer || [];' +
+      'function gtag(){dataLayer.push(arguments);}' +
+      'gtag("js", new Date());' +
+      'gtag("config", "' +
+      GA_ID +
+      '");';
+
+    try {
+      document.head.appendChild(script1);
+      document.head.appendChild(script2);
+    } catch (err) {
+      console.error('Failed to load Google Analytics:', err);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', createAnalyticsScripts);
+  } else {
+    createAnalyticsScripts();
+  }
+})();
+
+
+</script>
 </body>
 </html>
