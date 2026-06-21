@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="// lumbres-estudio-biblico">
+    <title>LUMBRE - Estudio Bíblico</title>
+    <style>
+        :root {
+            /* PALETA MODO CLARO */
+            --bg-app: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            --bg-panel: #ffffff;
+            --bg-header: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            --bg-topbar: #ffffff;
+            --border-color: #cbd5e1;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent-primary: #6366f1;
+            --accent-secondary: #818cf8;
+            --accent-hover: #a5b4fc;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-xl: 0 10px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* 🌙 PALETA MODO OSCURO - CORRECCIÓN DE VISIBILIDAD */
+        .app.night {
+            --bg-app: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+            --bg-panel: #1e293b;
+            --bg-header: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);
+            --bg-topbar: #0f172a;
+            --border-color: #334155; /* Gris azulado para visibilidad */
+            --text-primary: #f8fafc; /* Blanco hueso para evitar fatiga */
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-primary: #818cf8;
+            --accent-secondary: #a5b4fc;
+            --accent-hover: #c7d2fe;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.4);
+            --shadow-xl: 0 10px 15px rgba(0,0,0,0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+        body { background: var(--bg-app); color: var(--text-primary); transition: var(--transition); min-height: 100vh; }
+
+        /* HEADER */
+        .app-header { 
+            background: var(--bg-header); 
+            padding: 20px; 
+            text-align: center; 
+            color: white; 
+            box-shadow: var(--shadow-md);
+        }
+        .app-header h1 { font-size: 2em; letter-spacing: 2px; }
+        .app-header span { font-size: 0.5em; opacity: 0.8; display: block; }
+
+        /* TOPBAR - CORRECCIÓN DE SELECTS */
+        .top-bar { 
+            background: var(--bg-topbar); 
+            padding: 20px; 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+            justify-content: center; 
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+        }
+        .field { display: flex; flex-direction: column; gap: 5px; }
+        .field label { font-size: 0.8em; color: var(--text-muted); font-weight: bold; }
+
+        /* ESTILO DE SELECTS (FORZADO PARA MODO OSCURO) */
+        select { 
+            padding: 10px 15px; 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            background-color: var(--bg-panel); 
+            color: var(--text-primary); 
+            cursor: pointer; 
+            transition: var(--transition);
+            outline: none;
+            appearance: none; /* Eliminamos la flecha nativa para poner una personalizada */
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 12px;
+        }
+        
+        /* CORRECCIÓN ESPECÍFICA PARA EL DROPDOWN EN MODO OSCURO */
+        .app.night select { 
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23cbd5e1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+
+        select:hover { border-color: var(--accent-primary); box-shadow: 0 0 5px var(--accent-primary); }
+
+        /* BOTONES */
+        .btn-action { 
+            padding: 10px 20px; 
+            border: none; 
+            border-radius: 8px; 
+            background: var(--accent-primary); 
+            color: white; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: var(--transition);
+        }
+        .btn-action:hover { background: var(--accent-secondary); transform: translateY(-2px); }
+        .btn-night { background: #1e293b; color: white; }
+
+        /* MAIN LAYOUT */
+        .main { 
+            display: flex; 
+            gap: 20px; 
+            padding: 20px; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+        }
+        .panel { 
+            flex: 1; 
+            background: var(--bg-panel); 
+            border: 1px solid var(--border-// lumbres-estudio-biblico); 
+            border-radius: 12px; 
+            box-shadow: var(--shadow-md); 
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .panel-header { 
+            padding: 15px 20px; 
+            background: var(--bg-header); 
+            color: white; 
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .panel-body { padding: 20px; color: var(--text-primary); line-height: 1.6; }
+
+        /* VISIBILIDAD DE TEXTO BÍBLICO */
+        .verse { 
+            margin-bottom: 15px; 
+            padding: 10px; 
+            border-radius: 8px; 
+            border-left: 4px solid var(--accent-primary);
+            background: rgba(129, 140, 248, 0.05);
+        }
+        .verse-num { font-weight: bold; color: var(--accent-primary); margin-right: 10px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .main { flex-direction: column; }
+            .top-bar { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app" id="appContainer">
+        <header class="app-header">
+            <h1>LUMBRE</h1>
+            <span>Estudio Bíblico · Comentarios · Traducciones</span>
+        </header>
+
+        <div class="top-bar">
+            <div class="field">
+                <label>Traducción</label>
+                <select id="translation">
+                    <option value="spa_r09">Reina Valera 1909</option>
+                    <option value="spa_rvg">Reina Valera Gómez</option>
+                    <option value="spa_pdt">Palabra de Dios para ti</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Comentario</label>
+                <select id="commentary">
+                    <option value="jamieson-fausset-brown">Jamieson-Fausset-Brown</option>
+                    <option value="matthew-henry">Matthew Henry</option>
+                    <option value="john-gill">John Gill</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Libro</label>
+                <select id="book">
+                    <option>Cargando...</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Capítulo</label>
+                <select id="chapter">
+                    <option value="1">1</option>
+                </select>
+            </div>
+            <div class="field" style="justify-content: flex-end;">
+                <button class="btn-action" onclick="loadData()">Cargar</button>
+            </div>
+            <div class="field" style="justify-content: flex-end;">
+                <button class="btn-action btn-night" onclick="toggleNight()" id="nightBtn">🌙 Modo Noche</button>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="panel">
+                <div class="panel-header">
+                    <span id="bibleTitle">Texto Bíblico</span>
+                </div>
+                <div class="panel-body" id="bibleContent">
+                    <p>Selecciona un libro y capítulo para comenzar.</p>
+                </div>
+            </div>
+            <div class="panel">
+                <div class="panel-header">
+                    <span id="commTitle">Comentario</span>
+                </div>
+                <div class="panel-body" id="commContent">
+                    <p>El comentario aparecerá aquí.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://bible.helloao.org/api';
+        let currentTranslation = 'spa_r09';
+
+        // Función para cambiar el modo noche y actualizar visibilidad
+        function toggleNight() {
+            const app = document.getElementById('appContainer');
+            const btn = document.getElementById('nightBtn');
+            app.classList.toggle('night');
+            
+            const isNight = app.classList.contains('night');
+            btn.innerHTML = isNight ? '☀️ Modo Día' : '🌙 Modo Noche';
+            
+            // Guardar preferencia
+            localStorage.setItem('lumbre-theme', isNight ? 'night' : 'day');
+            
+            // Forzar refresco de visibilidad de selects
+            updateUIContrast();
+        }
+
+        function updateUIContrast() {
+            // Esta función asegura que el navegador vuelva a pintar los elementos 
+            // con las nuevas variables de contraste
+            const selects = document.querySelectorAll('select');
+            selects.forEach(s => {
+                s.style.opacity = '0';
+                setTimeout(() => s.style.opacity = '1', 50);
+            });
+        }
+
+        async function loadBooks() {
+            const bookSelect = document.getElementById('book');
+            try {
+                const res = await fetch(`${API_BASE}/${currentTranslation}/books.json`);
+                const data = await res.json();
+                bookSelect.innerHTML = '';
+                data.books.forEach(b => {
+                    const opt = document.createElement('option');
+                    opt.value = b.id;
+                    opt.textContent = b.name;
+                    bookSelect.appendChild(opt);
+                });
+            } catch (e) { console.error("Error cargando libros"); }
+        }
+
+        async function loadData() {
+            const book = document.getElementById('book').value;
+            const chapter = document.getElementById('chapter').value;
+            const trans = document.getElementById('translation').value;
+            const comm = document.getElementById('commentary').value;
+
+            document.getElementById('bibleContent').innerHTML = 'Cargando...';
+            document.getElementById('commContent').innerHTML = 'Cargando...';
+
+            try {
+                const bRes = await fetch(`${API_BASE}/${trans}/${book}/${chapter}.json`);
+                const bData = await bRes.json();
+                
+                let bibleHtml = '';
+                bData.chapter.content.forEach(item => {
+                    if (item.type === 'verse') {
+                        bibleHtml += `<div class="verse"><span class="verse-num">${item.number}</span> ${item.content.join(' ')}</div>`;
+                    }
+                });
+                document.getElementById('bibleContent').innerHTML = bibleHtml;
+
+                const cRes = await fetch(`${API_BASE}/c/${comm}/${book}/${chapter}.json`);
+                const cData = await cRes.json();
+                let commHtml = '';
+                if (cData.chapter) {
+                    cData.chapter.content.forEach(item => {
+                        if (item.type === 'verse') {
+                            commHtml += `<div class="verse" style="border-color: var(--accent-secondary)"><strong>Versículo ${item.number}:</strong> ${item.// lumbres-estudio-biblico}</div>`;
+                        }
+                    });
+                }
+                document.getElementById('commContent').innerHTML = commHtml || 'No hay comentario disponible.';
+            } catch (e) {
+                document.getElementById('bibleContent').innerHTML = 'Error al cargar los datos.';
+            }
+        }
+
+        // Carga inicial
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('lumbre-theme');
+            if (savedTheme === 'night') {
+                document.getElementById('appContainer').classList.add('night');
+                document.getElementById('nightBtn').innerHTML = '☀️ Modo Día';
+            }
+            loadBooks();
+        };
+    </script>
+</body>
+</html>
